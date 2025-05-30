@@ -2,26 +2,28 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const menuSchema = new Schema(
   {
-    username: {
+    prodId: {
       type: String,
       unique: true,
       required: true,
     },
-    password: {
+    title: {
       type: String,
       required: true,
-      minlength: 4,
     },
-    userId: {
+    desc: {
       type: String,
       required: true,
-      unique: true,
+    },
+    price: {
+      type: Number,
+      required: true,
     },
   },
-  { timestamps: true }
+  { collection: "menu" }
 );
 
-const User = mongoose.model("User", userSchema);
-export default User;
+const Menu = mongoose.model("Menu", menuSchema);
+export default Menu;
