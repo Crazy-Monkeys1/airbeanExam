@@ -20,3 +20,14 @@ export async function getUser(username) {
     return null;
   }
 }
+
+export async function getUserByUserId(userId) {
+  try {
+    const user = await User.findOne({ userId: userId });
+    if (user) return user;
+    else throw new Error("No user found");
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+}

@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import errorHandler from "./middlewares/errorHandler.js";
 import logger from "./middlewares/logger.js";
 import authRouter from "./routes/auth.js";
+import menuRouter from "./routes/menu.js";
+import cartRouter from "./routes/cart.js";
+import orderRouter from "./routes/order.js";
 
 // Config
 
@@ -21,6 +24,9 @@ app.use(logger);
 // Routes
 
 app.use("/api/auth", authRouter);
+app.use("/api/menu", menuRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/orders", orderRouter);
 
 // DB
 
