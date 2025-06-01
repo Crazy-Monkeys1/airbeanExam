@@ -4,9 +4,9 @@ export async function getAllOrders() {
   return await Order.find();
 }
 
-export async function getOrderByID(userId) {
+export async function getOrdersByID(userId) {
   try {
-    return await Order.findOne({ userId: userId });
+    return await Order.find({ userId: userId });
   } catch (error) {
     console.log(error.message);
     return null;
