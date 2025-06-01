@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, getAllOrders, getOrderByID } from "../services/orders.js";
+import { createOrder, getAllOrders, getOrdersByID } from "../services/orders.js";
 import errorHandler from "../middlewares/errorHandler.js";
 
 const router = Router();
@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 // GET order by ID
 router.get("/:id", async (req, res, next) => {
   const userId = req.params.id;
-  const order = await getOrderByID(userId);
+  const order = await getOrdersByID(userId);
   if (order) {
     res.json({
       sucess: true,
