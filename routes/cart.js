@@ -1,9 +1,7 @@
 import { Router } from "express";
 import getAllCarts, { getCartById, updateCart } from "../services/cart.js";
-import { getUserByUserId } from "../services/users.js";
 import { getMenuItem } from "../services/menu.js";
 import { v4 as uuid } from "uuid";
-import mongoose from "mongoose";
 
 const router = Router();
 

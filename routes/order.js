@@ -4,12 +4,11 @@ import {
   getAllOrders,
   getOrdersByID,
 } from "../services/orders.js";
-import { authorizeUser } from "../middlewares/authorize.js";
-
 const router = Router();
+import Cart from "../models/cart.js";
 
 // GET all orders
-router.get("/", authorizeUser, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   const orders = await getAllOrders();
   if (orders) {
     res.json({
@@ -46,16 +45,27 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { cartId } = req.body;
-    console.log(cartId);
+
+    const cart = await Cart.findOne({ cartId: cartId });
+
     if (!cartId) {
+      res.json({
+        success: false,
+        message: "Cart not found",
+      });
     }
 
-    const order = await createOrder(cartId);
+    const order = await createOrder(cartId, cart.items);
+    order.orderItems.push(...cart.items);
+
+    await order.save();
+
     res.json({
       success: true,
       order: order,
     });
   } catch (error) {
+    console.log(error.message);
     res.json({
       message: error.status,
     });
