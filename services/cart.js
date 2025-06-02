@@ -1,5 +1,4 @@
 import Cart from "../models/cart.js";
-import { v4 as uuid } from "uuid";
 
 export default async function getAllCarts() {
   try {
@@ -16,7 +15,7 @@ async function getOrCreateCart(userId) {
     let cart = await Cart.findOne({ cartId: userId });
     if (!cart) {
       cart = await Cart.create({
-        cartId: `cart-${uuid().substring(0, 5)}`, // HÄR ÄR PROBLEMET
+        cartId: userId,
         userId: userId,
         items: [],
       });
@@ -58,5 +57,10 @@ export async function updateCart(userId, menuItem) {
 }
 
 export async function getCartById(cartId) {
-  return await Cart.findOne({ cartId: cartId });
+  try {
+    return await Cart.findOne({ cartId: cartId });
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
 }
