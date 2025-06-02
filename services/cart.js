@@ -1,4 +1,5 @@
 import Cart from "../models/cart.js";
+import { v4 as uuid } from "uuid";
 
 export default async function getAllCarts() {
   try {
@@ -11,13 +12,11 @@ export default async function getAllCarts() {
 }
 
 async function getOrCreateCart(userId) {
-  // finns cart - hämta, annars skapa cart
-  //   console.log(`${userId} inuti getOrCreateCart`);
   try {
     let cart = await Cart.findOne({ cartId: userId });
     if (!cart) {
       cart = await Cart.create({
-        cartId: userId, // cartId är userId (så man bara har en cart per användare)
+        cartId: `cart-${uuid().substring(0, 5)}`, // HÄR ÄR PROBLEMET
         userId: userId,
         items: [],
       });

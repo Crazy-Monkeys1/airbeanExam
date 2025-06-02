@@ -1,11 +1,15 @@
 import { Router } from "express";
-import { createOrder, getAllOrders, getOrdersByID } from "../services/orders.js";
-import errorHandler from "../middlewares/errorHandler.js";
+import {
+  createOrder,
+  getAllOrders,
+  getOrdersByID,
+} from "../services/orders.js";
+import { authorizeUser } from "../middlewares/authorize.js";
 
 const router = Router();
 
 // GET all orders
-router.get("/", async (req, res, next) => {
+router.get("/", authorizeUser, async (req, res, next) => {
   const orders = await getAllOrders();
   if (orders) {
     res.json({
@@ -42,6 +46,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { cartId } = req.body;
+    console.log(cartId);
     if (!cartId) {
     }
 
