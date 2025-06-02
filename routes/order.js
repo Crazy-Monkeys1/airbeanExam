@@ -26,19 +26,25 @@ router.get("/", async (req, res, next) => {
 // GET order by ID
 router.get("/:id", async (req, res, next) => {
   const userId = req.params.id;
-  const order = await getOrdersByID(userId);
-  if (order) {
+  try {
+    const orders = await getOrdersByID(userId);
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found for this user",
+      });
+    }
+
     res.json({
-      sucess: true,
-      order: order,
+      success: true,
+      orders: orders, // ändrat från `order` till `orders`
     });
-  } else {
-    res.status(404).json({
-      success: false,
-      message: "Can't find order with that ID",
-    });
+  } catch (error) {
+    next(error);
   }
 });
+
 
 // POST new order
 
