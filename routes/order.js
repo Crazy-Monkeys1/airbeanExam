@@ -38,7 +38,7 @@ router.get("/:id", async (req, res, next) => {
 
     res.json({
       success: true,
-      orders: orders, // ändrat från `order` till `orders`
+      orders: orders,
     });
   } catch (error) {
     next(error);
