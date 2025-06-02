@@ -52,7 +52,8 @@ router.post("/register", async (req, res, next) => {
     const result = await registerUser({
       username: username,
       password: password,
-      userId: uuid().substring(0, 5),
+      role: "User",
+      userId: `user-${uuid().substring(0, 5)}`,
     });
     if (result) {
       res.status(201).json({

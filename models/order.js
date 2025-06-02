@@ -11,6 +11,10 @@ const orderSchema = new Schema(
     userId: {
       type: String,
     },
+    orderId: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
